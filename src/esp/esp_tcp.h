@@ -7,6 +7,8 @@
 #include <freertos/event_groups.h>
 #include <freertos/task.h>
 
+#include <mutex>
+
 #define ESP_TCP_EVENT_RECEIVE_TASK_EXIT 1
 
 class EspTcp : public Tcp {
@@ -25,6 +27,8 @@ private:
     EventGroupHandle_t event_group_ = nullptr;
     TaskHandle_t receive_task_handle_ = nullptr;
     int last_error_ = 0;
+
+    std::mutex mutex_;
 
     void ReceiveTask();
     // 内部断开处理函数
